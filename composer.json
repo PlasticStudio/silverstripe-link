@@ -17,7 +17,7 @@
   "require": {
     "silverstripe/framework": "^6",
     "unclecheese/display-logic": "^4",
-    "giggsey/libphonenumber-for-php": "^8.0"
+    "giggsey/libphonenumber-for-php": "^9"
   },
   "extra": {
     "installer-name": "link"
