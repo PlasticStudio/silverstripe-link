@@ -3,7 +3,7 @@
 namespace gorriecoe\Link\Extensions;
 
 use gorriecoe\Link\Models\Link;
-use SilverStripe\ORCoreM\Extension;
+use SilverStripe\Core\Extension;
 
 /**
  * Fixes duplicate link in SiteTree
