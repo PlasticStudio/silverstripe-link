@@ -293,7 +293,7 @@ class Link extends DataObject
      * Validate
      * @return ValidationResult
      */
-    public function validate()
+    public function validate(): \SilverStripe\Core\Validation\ValidationResult
     {
         $result = ValidationResult::create();
 
@@ -793,14 +793,16 @@ class Link extends DataObject
      * Renders an HTML anchor attribute for this link
      * @return \SilverStripe\ORM\FieldType\DBHTMLText
      */
-    public function forTemplate()
+    public function forTemplate(): string
     {
         $link = '';
         if ($this->LinkURL) {
             $link = $this->renderWith($this->RenderTemplates);
         }
         $this->extend('updateTemplate', $link);
-        return $link;
+        
+        // Ensure a string is returned
+        return $link ?: '';
     }
 
     /**
