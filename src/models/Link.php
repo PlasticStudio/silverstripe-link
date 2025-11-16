@@ -188,16 +188,10 @@ class Link extends DataObject
     public function getCMSFields()
     {
         $fields = FieldList::create(
-            TabSet::create(
-                'Root',
-                Tab::create('Main')
-            )
-            ->setTitle(_t('SiteTree.TABMAIN', 'Main')),
-            TabSet::create(
-                'Root',
+            TabSet::create('Root',
+                Tab::create('Main'),
                 Tab::create('Settings')
             )
-            ->setTitle(_t('SiteTree.TABSETTINGS', 'Settings'))
         );
 
         if ($styles = $this->i18nStyles) {
@@ -301,6 +295,8 @@ class Link extends DataObject
      */
     public function validate()
     {
+        $result = ValidationResult::create();
+
         $valid = true;
         $message = null;
         $type = $this->Type;
@@ -310,26 +306,27 @@ class Link extends DataObject
             case 'URL':
             case 'Email':
             case 'Phone':
-                if ($this->{$type} == '') {
+                if (empty($this->{$type})) {
                     $valid = false;
                     $message = _t(
-                        __CLASS__ . '.VALIDATIONERROR_EMPTY'.strtoupper($type),
+                        __CLASS__ . '.VALIDATIONERROR_EMPTY' . strtoupper($type),
                         'You must enter a {TypeLabel}',
                         [
-                            'TypeLabel' => $this->TypeLabel
+                            'TypeLabel' => $this->getTypeLabel()
                         ]
                     );
                 }
                 break;
             case 'File':
             case 'SiteTree':
-                if ($type && empty($this->{$type.'ID'})) {
+                $relationID = $type . 'ID';
+                if ($type && empty($this->{$relationID})) {
                     $valid = false;
                     $message = _t(
                         __CLASS__ . '.VALIDATIONERROR_OBJECT',
                         'Please select a {TypeLabel}',
                         [
-                            'TypeLabel' => $this->TypeLabel
+                            'TypeLabel' => $this->getTypeLabel()
                         ]
                     );
                 }
@@ -369,8 +366,7 @@ class Link extends DataObject
             }
         }
 
-        $result = ValidationResult::create();
-        if (!$valid) {
+        if (!$valid && $message) {
             $result->addError($message);
         }
 
@@ -574,7 +570,7 @@ class Link extends DataObject
                 $LinkURL = $this->Email ? 'mailto:' . $this->Email : null;
                 break;
             case 'Phone':
-                $LinkURL = $this->obj('Phone')->PhoneFriendly()->RFC3966();
+                $LinkURL = DBField::create_field('Phone', $this->Phone)->PhoneFriendly()->RFC3966();
                 break;
             case 'File':
             case 'SiteTree':
