@@ -21,6 +21,7 @@ use SilverStripe\CMS\Controllers\ContentController;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 use SilverStripe\Assets\Folder;
 use SilverStripe\ORM\FieldType\DBField;
+use SilverStripe\ORM\FieldType\DBVarchar;
 
 /**
  * Link
@@ -571,7 +572,7 @@ class Link extends DataObject
                 $LinkURL = $this->Email ? 'mailto:' . $this->Email : null;
                 break;
             case 'Phone':
-                $LinkURL = DBField::create_field('Phone', $this->Phone)->PhoneFriendly()->RFC3966();
+                $LinkURL = DBField::create_field(DBVarchar::class, $this->Phone)->PhoneFriendly()->RFC3966();
                 break;
             case 'File':
             case 'SiteTree':
