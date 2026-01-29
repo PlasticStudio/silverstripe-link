@@ -20,6 +20,7 @@ use SilverStripe\Control\Director;
 use SilverStripe\CMS\Controllers\ContentController;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 use SilverStripe\Assets\Folder;
+use SilverStripe\ORM\FieldType\DBField;
 
 /**
  * Link
