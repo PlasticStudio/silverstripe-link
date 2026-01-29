@@ -15,6 +15,10 @@ Composer is the recommended way of installing SilverStripe modules.
 composer require gorriecoe/silverstripe-link
 ```
 
+## Requirements
+
+- SilverStripe 6
+
 ## Documentation
 
 Check out [documentation](https://gorriecoe.github.io/silverstripe-link/en)
